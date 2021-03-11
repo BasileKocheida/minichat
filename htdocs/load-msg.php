@@ -11,14 +11,14 @@ try {
 
 
 $r1 = $pdo->query('SELECT * FROM user 
-JOIN message_user WHERE user.id = message_user.idUser ORDER BY dateHour DESC LIMIT 5');       
+JOIN message_user WHERE user.id = message_user.idUser ORDER BY dateHour ASC LIMIT 10');       
 
 while ($donnees = $r1->fetch())
 { ?>
     <p>
-        <strong style="color : <?=$donnees['color']?>;">
-            <?=htmlspecialchars($donnees['pseudo'])?> <?=$donnees['dateHour']?>
-        </strong> :
+         <h6 style="color : <?=$donnees['color']?>;">
+            <?=htmlspecialchars($donnees['pseudo'])?></h6><i><?=$donnees['dateHour']?></i>
+        :
             <?=htmlspecialchars($donnees['msg']) ?> 
     </p>
 <?php }

@@ -1,5 +1,4 @@
 <?php
-
 try {
     $pdo = new PDO('mysql:host=mini_chat.loc;dbname=minichat', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -8,13 +7,17 @@ try {
     print "Erreur !: " . $e->getMessage() . "<br/>";
     die();
 }
-
-
-if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['msg']) && !empty($_POST['msg'])) {
-    die('paramètre manquant');
-}
-
 ?>
+<?php
+$userStatement = $pdo->prepare("SELECT * FROM user");
+?>
+<?php if (!empty($_GET["message"])) : ?>
+        <div style="padding: 10px;background:gray;color:#fff;">
+            <?=$_GET["message"]?>
+        </div>
+<?php endif;?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -25,9 +28,8 @@ if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['msg']) 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="customa.css" rel="stylesheet">
-    <title>MINICHAT</title>
+    <title>Log in</title>
 </head>
-
 <body>
 <nav>
     <div class="nav-wrapper #283593 indigo darken-3">
@@ -41,50 +43,18 @@ if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['msg']) 
     </div>
   </nav>
 
-<div class='row'> 
-    <h4>Start to <span>chat!</span></h4>
-    <div class="box col s8">
-        <div class="box-chat">
-            <div class='content-msg'>
-            <?php       
-               include ('load-msg.php');
-            ?>
-            </div>
-        </div>    
-      <div class='formulaire'><br><br>
+    <form action="insert-login.php" method="post">
+                    <h4>Sign in</h4>
 
-                <label for="pseudo">Pseudo : </label> <!--condition ternaire-->
-                <input type="text" id="pseudo" name="pseudo" value="<?=empty($_COOKIE['pseudo']) ? "" : $_COOKIE["pseudo"] ?>"><br><br>
-                <label for="msg">Message : </label>  
-                <textarea type="text" id="message" name="msg"></textarea><br><br>
-                <!--<input id="color" type="hidden" name="color" value="?>"><br>-->
+                    <label><b>Pseudo</b></label>
+                    <input type="text" placeholder="Entrer le nom" required name="pseudo"><br>
 
-                <button class="btn waves-effect #283593 indigo darken-3" onclick="sendMessage()"> Envoyer</button>
+                    <label><b>Password</b></label>
+                    <input type="text" placeholder="Entrer le prénom" required name="password"><br>
 
-            <br>
-       </div>
-    </div>  
-       
-        <div class="userlist col s4">
-            <h4>USER LIST</h4>
-                <p>
-                <?php    
-                $userList = $pdo->prepare('SELECT pseudo, color FROM user');
-                $userList->execute();
-                $getUserList = $userList ->fetchAll(PDO::FETCH_ASSOC);
-
-                foreach ($getUserList as $users) { ?>
-                   
-                <img src="https://img.icons8.com/emoji/20/000000/green-circle-emoji.png"/>
-                <span style="color : <?=$users['color']?>;">
-                
-                <?= $users['pseudo']?></span><br>
-               <?php } ?> 
-                
-                </p>
-    </div>
-          
-</div> 
+                    <button class="btn waves-effect #283593 indigo darken-3"> Sign in</button>
+    <br>
+    </form>
 
 <footer>
 
@@ -93,8 +63,8 @@ if (isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['msg']) 
     <img src="https://img.icons8.com/color/48/000000/snapchat-circled-logo--v5.png">
     <img src="https://img.icons8.com/nolan/48/facebook-f.png">
 
-</footer>
 
+</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script type="text/javascript" src="main.js"></script>

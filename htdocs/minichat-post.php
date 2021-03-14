@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+var_dump($_SESSION);
 try {
     $pdo = new PDO('mysql:host=mini_chat.loc;dbname=minichat', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -12,7 +13,7 @@ try {
 <?php
 
 $message = $_POST['msg']; 
-$pseudo = $_POST['pseudo'];
+$pseudo = $_SESSION['pseudo'];
 
 function randomColor(){
     $rgbColor = array();
@@ -46,49 +47,18 @@ if ($pseudoVerification) {
 
     $insertMsg->execute([
 
-    $_POST["msg"],
+    $message,
     $pseudoVerification["id"]
+    
     ]);
     
 } else {
     // le nom d'utilisateur n'existe pas
 
-        $insertUserStatement =$pdo->prepare(
-        "INSERT INTO user
-        (pseudo,IP, color)
-        VALUES
-        (?,?, ?)
-        ");
-
-       
-        $insertUserStatement->execute([
-        
-            $_POST["pseudo"],
-            $_SERVER['REMOTE_ADDR'],
-            randomColor()
-
-        ]);
-        
-        
-        
-            $lastId = $pdo->lastInsertId();
-
-    
-            $insertMsg =$pdo->prepare(
-            "INSERT INTO message_user
-            (msg, IdUser)
-            VALUES
-            (?,?)
-            ");
-
-            $insertMsg->execute([
-
-            $_POST["msg"],
-            $lastId
-            ]);
+        echo "Please connect to chat";
 
     } 
-    setcookie('pseudo', $pseudo, time() + 365*24*3600);
+    
     
 
 

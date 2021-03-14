@@ -11,7 +11,7 @@ try {
 
 
 $r1 = $pdo->query('SELECT * FROM user 
-JOIN message_user WHERE user.id = message_user.idUser ORDER BY dateHour ASC LIMIT 10');       
+JOIN message_user WHERE user.id = message_user.idUser ORDER BY dateHour ');       
 
 while ($donnees = $r1->fetch())
 { ?>

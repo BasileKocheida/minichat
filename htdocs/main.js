@@ -4,27 +4,36 @@ function autoLoad() {
     $.ajax({
         url: 'load-msg.php',
         success: function(data) {
-            console.log(data);
             $('.content-msg').html(data);
-            console.log('page was updated');
+            scrollBar()
         }
     });
 }
+
+let box = document.querySelector('.content-msg');
+box.scrollTop = box.scrollHeight;
+
+function scrollBar(){
+    let box = document.querySelector('.content-msg');
+    box.scrollTop = box.scrollHeight;}
+
+
     $(document).ready(function() {
     //autoLoad();
-    setInterval(autoLoad, 3000);
+    setInterval(() => {
+        autoLoad()
+    }, 3000);
 });
-
 
 //bouton envoyer bloque l'actualisation form 
 
 function sendMessage() {
     $.post('minichat-post.php',{
-        pseudo: $('#pseudo'). val(),
+        //pseudo: $('#pseudo'). val(),
         msg: $('#message'). val(),
         //color: $('#color'). val()
-    },function(){
-        document.querySelector('#pseudo').value=''
+    }, function(){
+        //document.querySelector('#pseudo').value=''
         document.querySelector('#message').value=''
         //document.querySelector('#color').value=''
         autoLoad()
@@ -41,3 +50,6 @@ function sendMessage() {
 //$("#cpa-form").submit(function(e){
   //  e.preventDefault();
   //});
+
+
+

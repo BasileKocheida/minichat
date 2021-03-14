@@ -1,4 +1,6 @@
-<?php
+<?php // nouvel utilisateur 
+
+
 try {
     $pdo = new PDO('mysql:host=mini_chat.loc;dbname=minichat', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -29,11 +31,11 @@ if (empty($_POST["pseudo"])){
     die("Paramètre manquant.");
 }
 
-$insertStatement =$pdo->prepare("
-        INSERT INTO user
-        (pseudo, password, IP, color)
-        VALUES
-        (?,?,?, ?)
+$insertStatement =$pdo->prepare(
+    "INSERT INTO user
+    (pseudo, password, IP, color)
+    VALUES
+    (?,?,?, ?)
     ");
 
 $insertStatement->execute([
@@ -47,4 +49,4 @@ $insertStatement->execute([
 
 
 
-header('Location: minichat.php?message=you are in the register');
+header('Location: ../login_form.php?message=you are in the register');

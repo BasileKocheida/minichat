@@ -1,4 +1,4 @@
-<?php
+<?php // Formulaire d'inscription
 try {
     $pdo = new PDO('mysql:host=mini_chat.loc;dbname=minichat', 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -27,7 +27,7 @@ $userStatement = $pdo->prepare("SELECT * FROM user");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="customa.css" rel="stylesheet">
+    <link href="../customa.css" rel="stylesheet">
     <title>Log in</title>
 </head>
 <body>
@@ -35,38 +35,24 @@ $userStatement = $pdo->prepare("SELECT * FROM user");
     <div class="nav-wrapper #283593 indigo darken-3">
       <a href="#!" class="brand-logo"><i class="material-icons">child_care</i>MINICHAT</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="login.php"><i class="material-icons">group_add</i></a></li>
-        <li><a href="minichat.php"><i class="material-icons">view_module</i></a></li>
-        <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
-        <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+        <li><a href="sign_in_form.php"><i class="material-icons">group_add</i></a></li>
+        <li><a href="login_form.php"><i class="material-icons">settings_power</i></a></li>
+        <li><a href="../minichat.php"><i class="material-icons">view_module</i></a></li>
       </ul>
     </div>
   </nav>
 
-    <form action="insert-login.php" method="post">
+    <form action="./process/process_sign_in.php" method="post">
                     <h4>Sign in</h4>
 
                     <label><b>Pseudo</b></label>
-                    <input type="text" placeholder="Entrer le nom" required name="pseudo"><br>
+                    <input type="text" placeholder="pseudo" required name="pseudo"><br>
 
                     <label><b>Password</b></label>
-                    <input type="text" placeholder="Entrer le prénom" required name="password"><br>
+                    <input type="password" placeholder="password" required name="password"><br>
 
                     <button class="btn waves-effect #283593 indigo darken-3"> Sign in</button>
     <br>
     </form>
 
-<footer>
-
-    <p class="foot"> Follow Us !</p>
-    <img src="https://img.icons8.com/color/48/000000/instagram-new--v2.png">
-    <img src="https://img.icons8.com/color/48/000000/snapchat-circled-logo--v5.png">
-    <img src="https://img.icons8.com/nolan/48/facebook-f.png">
-
-
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script type="text/javascript" src="main.js"></script>
-</body>
-</html>
+    <?php include __DIR__.'/../partials/footer.php' ?>
